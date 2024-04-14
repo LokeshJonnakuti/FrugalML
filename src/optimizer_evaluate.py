@@ -29,12 +29,14 @@ class OptimizerEvaluator(object):
                  split = True,
                  train_ratio = 0.5,
                  test_eval = True,
-                 randseedset = [1,5,10,50,100],
+                 randseedset = None,
                  baseid = 100,
-                 optimizername = ['FrugalMLFixBase', 'FrugalMLQSonly','FrugalML'],
+                 optimizername = None,
                  dataname='FERPLUS',
                  taskname='fer',
                  tradeoff_num=50):
+        randseedset = [1,5,10,50,100] if randseedset is None else randseedset
+        optimizername = ['FrugalMLFixBase', 'FrugalMLQSonly','FrugalML'] if optimizername is None else optimizername
         
         self.datapath = datapath
         self.split = split

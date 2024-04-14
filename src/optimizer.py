@@ -310,11 +310,13 @@ class optimizer_linear(optimizer):
                  weight_intersect = np.ones((3,2)),
                  w_0_vector = np.ones(3),
                  b_0_vector = np.ones(3),
-                 prob_interval=[0,0.3,0.6,1],
-                 costvector = [4,6], 
+                 prob_interval=None,
+                 costvector = None, 
                  budget = 5,
                  r_0 = 0
                  ):
+        prob_interval = [0,0.3,0.6,1] if prob_interval is None else prob_interval
+        costvector = [4,6] if costvector is None else costvector
         self.weight_slop = weight_slop
         self.weight_intersect = weight_intersect
         self.w_0_vector = w_0_vector
@@ -331,10 +333,12 @@ class optimizer_linear(optimizer):
                       weight_intersect,
                       w_0_vector,
                       b_0_vector,
-                      prob_interval=[0,0.3,0.6,1],
-                      costvector = [4,6], 
+                      prob_interval=None,
+                      costvector = None, 
                       budget = 5,
                       r_0 = 0):
+        prob_interval = [0,0.3,0.6,1] if prob_interval is None else prob_interval
+        costvector = [4,6] if costvector is None else costvector
         self.weight_slop = weight_slop
         self.weight_intersect = weight_intersect
         self.w_0_vector = w_0_vector
@@ -546,11 +550,11 @@ class optimizer_linear(optimizer):
         
 class optimizer_linear_offline(object):
     def __init__(self,
-                 base_id = [100],
-                 prob_interval=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.825,0.9,1],
-                 cost_vector = [4,6], 
+                 base_id = None,
+                 prob_interval=None,
+                 cost_vector = None, 
                  budget = 5, 
-                 model_id=[0,2],
+                 model_id=None,
                  datapath='../dataset/mlserviceperformance_RAFDB',
                  MLModelsClass = MLModels,
                  online = False,
@@ -558,7 +562,12 @@ class optimizer_linear_offline(object):
                  train_ratio = 1,
                  randseed = 0,
                  test_eval=False,
-                 context = [0,1]):
+                 context = None):
+        base_id = [100] if base_id is None else base_id
+        prob_interval = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.825,0.9,1] if prob_interval is None else prob_interval
+        cost_vector = [4,6] if cost_vector is None else cost_vector
+        model_id = [0,2] if model_id is None else model_id
+        context = [0,1] if context is None else context
         self.base_id = base_id
         self.prob_interval = prob_interval
         self.cost_vector = cost_vector
@@ -696,15 +705,15 @@ class optimizer_linear_offline(object):
 
 class optimizer_linear_offline_autobase(object):
     def __init__(self,
-                 prob_interval=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.825,0.9,1],
-                 budget_frac =[0,0.025,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1],
-                 context = [0,1,2,3,4,5,6],
+                 prob_interval=None,
+                 budget_frac =None,
+                 context = None,
                  #context = [0,1],
                  spline_degree = 1,
-                 cost_vector_all = [0,4,6], 
+                 cost_vector_all = None, 
                  budget = 5,
                  budget_num = 20,
-                 model_id_all = [0,2,100],
+                 model_id_all = None,
                  datapath='../dataset/mlserviceperformance_RAFDB',
                  MLModelsClass = MLModels,
                  use_context = False,
@@ -714,6 +723,11 @@ class optimizer_linear_offline_autobase(object):
                  randseed=0,
                  disable_two_model=False,
                  test_eval=True):
+        prob_interval = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.825,0.9,1] if prob_interval is None else prob_interval
+        budget_frac = [0,0.025,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1] if budget_frac is None else budget_frac
+        context = [0,1,2,3,4,5,6] if context is None else context
+        cost_vector_all = [0,4,6] if cost_vector_all is None else cost_vector_all
+        model_id_all = [0,2,100] if model_id_all is None else model_id_all
         self.myinf = 1e9
         self.optimizer_linear_list = list()
         self.budget = budget
@@ -904,15 +918,15 @@ class optimizer_linear_offline_autobase(object):
 
 class optimizer_linear_context_offline(object):
     def __init__(self,
-                 base_id = [100],
-                 prob_interval=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],
-                 budget_frac =[0,0.025,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1],
-                 context = [0,1,2,3,4,5,6],
+                 base_id = None,
+                 prob_interval=None,
+                 budget_frac =None,
+                 context = None,
                  #context = [0,1],
                  spline_degree = 1,
-                 cost_vector = [4,6], 
+                 cost_vector = None, 
                  budget = 5, 
-                 model_id=[0,2],
+                 model_id=None,
                  #model_id_all = [0,2,100],
                  MLModelsClass = MLModels,
                  online=False,
@@ -923,6 +937,12 @@ class optimizer_linear_context_offline(object):
                  test_eval=False,
                  num_budget_init=14,
                  pgd_maxiter=3500):
+        base_id = [100] if base_id is None else base_id
+        prob_interval = [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] if prob_interval is None else prob_interval
+        budget_frac = [0,0.025,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1] if budget_frac is None else budget_frac
+        context = [0,1,2,3,4,5,6] if context is None else context
+        cost_vector = [4,6] if cost_vector is None else cost_vector
+        model_id = [0,2] if model_id is None else model_id
         self.num_thread_get_acc = 35
         self.num_thread = 15
         self.num_thread_pgd = num_budget_init	

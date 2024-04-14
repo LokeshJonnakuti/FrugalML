@@ -23,30 +23,39 @@ import argparse
 
 class VisualizeTool(object):
     def __init__(self, 
-                 optimizer_name = ['100','0','1','2', 'FrugalML','FrugalMLQSOnly', 'FrugalMLFixBase'],
-                 optimizer_legend = ['Base','Google Vision','Face++','MS Face', 'FrugalML','FrugalMLQSOnly', 'FrugalMLFixBase'],
-                 optimizer_linemarker = ['X','^','v','s','o','*','d','p'],
-                 optimizer_linestyle = ['-.','--','--','-.','-',':','--','-.'],
+                 optimizer_name = None,
+                 optimizer_legend = None,
+                 optimizer_linemarker = None,
+                 optimizer_linestyle = None,
                                   
                  skip_optimizer=4,
-                 skip_optimizer_shift_x = [0,0,0,0],
-                 skip_optimizer_shift_y = [0,0,0,0],
+                 skip_optimizer_shift_x = None,
+                 skip_optimizer_shift_y = None,
                  figureformat = 'jpg',
                  figurefolder = "../figures/", #  folder to save the figures
                  dataname='FERPlus',                 
                  split = True,
                  train_ratio = 0.5,
-                 randseedset=[1,5,10,50,100],
-                 randseedsetstat = [1,5,10,50,100],
+                 randseedset=None,
+                 randseedsetstat = None,
                  test_eval=True,
                  outputsavepath = '../output/', # folder to load the data
                  show_legend = True,
                  task = 'fer',
                  stat_efficiency = False,
-                 train_ratio_set=[0.005,0.01,0.05,0.1,0.2,0.5],
+                 train_ratio_set=None,
                  data_size = 6358,
                  plot_frac = 0.82,
                  ):
+        optimizer_name = ['100','0','1','2', 'FrugalML','FrugalMLQSOnly', 'FrugalMLFixBase'] if optimizer_name is None else optimizer_name
+        optimizer_legend = ['Base','Google Vision','Face++','MS Face', 'FrugalML','FrugalMLQSOnly', 'FrugalMLFixBase'] if optimizer_legend is None else optimizer_legend
+        optimizer_linemarker = ['X','^','v','s','o','*','d','p'] if optimizer_linemarker is None else optimizer_linemarker
+        optimizer_linestyle = ['-.','--','--','-.','-',':','--','-.'] if optimizer_linestyle is None else optimizer_linestyle
+        skip_optimizer_shift_x = [0,0,0,0] if skip_optimizer_shift_x is None else skip_optimizer_shift_x
+        skip_optimizer_shift_y = [0,0,0,0] if skip_optimizer_shift_y is None else skip_optimizer_shift_y
+        randseedset = [1,5,10,50,100] if randseedset is None else randseedset
+        randseedsetstat = [1,5,10,50,100] if randseedsetstat is None else randseedsetstat
+        train_ratio_set = [0.005,0.01,0.05,0.1,0.2,0.5] if train_ratio_set is None else train_ratio_set
 
         # Default values to set up the figures
         self.figuresize_tradeoff=(9,8)
@@ -312,15 +321,21 @@ class VisualizeTool(object):
 
     
 def plot_offline(dataname = 'RAFDB', 
-                 optimizer_name = ['100','0','1','2', 'FrugalML','FrugalMLQSonly', 'FrugalMLFixBase'],                 
-                 optimizer_legend = ['GitHub (CNN)','Google Vision','Face++','MS Face','FrugalML','FrugalML(QS Only)', 'FrugalML (Base=GH)'],
-                 skip_optimizer_shift_x=[1,-4,0.8,0.8],
-                 skip_optimizer_shift_y=[-0.012,0.016,0.005,-0.012],
+                 optimizer_name = None,                 
+                 optimizer_legend = None,
+                 skip_optimizer_shift_x=None,
+                 skip_optimizer_shift_y=None,
                  show_legend=True,
-                 randseedset=[1,5,10,50,100],
+                 randseedset=None,
                  stat_efficiency=True,
                  data_size=6358,
-                 train_ratio_set=[0.01,0.05,0.1,0.2,0.3,0.5]):
+                 train_ratio_set=None):
+   optimizer_name = ['100','0','1','2', 'FrugalML','FrugalMLQSonly', 'FrugalMLFixBase'] if optimizer_name is None else optimizer_name
+   optimizer_legend = ['GitHub (CNN)','Google Vision','Face++','MS Face','FrugalML','FrugalML(QS Only)', 'FrugalML (Base=GH)'] if optimizer_legend is None else optimizer_legend
+   skip_optimizer_shift_x = [1,-4,0.8,0.8] if skip_optimizer_shift_x is None else skip_optimizer_shift_x
+   skip_optimizer_shift_y = [-0.012,0.016,0.005,-0.012] if skip_optimizer_shift_y is None else skip_optimizer_shift_y
+   randseedset = [1,5,10,50,100] if randseedset is None else randseedset
+   train_ratio_set = [0.01,0.05,0.1,0.2,0.3,0.5] if train_ratio_set is None else train_ratio_set
 
    a = VisualizeTool(dataname=dataname,
                      optimizer_legend=optimizer_legend,

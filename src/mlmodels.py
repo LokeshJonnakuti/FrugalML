@@ -21,8 +21,10 @@ from scipy import stats
 #from sklearn.naive_bayes import CategoricalNB
 
 class MLModels():
-    def __init__(self, ModelID=[100],datapath='../dataset/mlserviceperformance_RAFDB',
-                 contextset = [0,1,2,3,4,5,6]):
+    def __init__(self, ModelID=None,datapath='../dataset/mlserviceperformance_RAFDB',
+                 contextset = None):
+        ModelID = [100] if ModelID is None else ModelID
+        contextset = [0,1,2,3,4,5,6] if contextset is None else contextset
                  #contextset = [0,1]):
         baseid = ModelID[0]
         path1 = datapath+'/Model'
@@ -205,8 +207,9 @@ class MLModels():
     def accuracy_condition_score_list(self, 
                                       ScoreRange=(0.1,0.5,0.9), 
                                       BaseID = 100, 
-                                      ModelID=[100],
+                                      ModelID=None,
                                       context=None):
+        ModelID = [100] if ModelID is None else ModelID
         BaseAccuracy = list()
         ModelAccuracy = list()
         #print('prob',self.probas)
@@ -259,10 +262,12 @@ class MLModels():
                 acc_pdf.append(acc_middle)
         return acc_pdf
     
-    def compute_conditional_accuracy_among_model_inverse(self, ScoreBound=0.9, ModelID=[0,1],context=None):
+    def compute_conditional_accuracy_among_model_inverse(self, ScoreBound=0.9, ModelID=None,context=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         return self.compute_conditional_accuracy_among_model_inverse_fast(ScoreBound=ScoreBound,ModelID=ModelID,context=context)
 
-    def compute_conditional_accuracy_among_model_inverse_slowloop(self, ScoreBound=0.9, ModelID=[0,1],context=None):
+    def compute_conditional_accuracy_among_model_inverse_slowloop(self, ScoreBound=0.9, ModelID=None,context=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         index1 = ModelID[0]
         index2 = ModelID[1]
         Count = 0
@@ -282,7 +287,8 @@ class MLModels():
         #print('fast result',result)
         return CountCorrect1/Count, CountCorrect2/Count, Count, CountCorrect1, CountCorrect2 
 
-    def compute_conditional_accuracy_among_model_inverse_fast(self, ScoreBound=0.9, ModelID=[0,1],context=None):
+    def compute_conditional_accuracy_among_model_inverse_fast(self, ScoreBound=0.9, ModelID=None,context=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         #print('start compute accuracin verse fast')
         index1 = ModelID[0]
         index2 = ModelID[1]
@@ -317,7 +323,8 @@ class MLModels():
         else:
             return (nowcontext==context)
         
-    def compute_prob_wrt_confidence(self,confidence_range=[0.9], BaseID=0,ModelID=0,context=None):
+    def compute_prob_wrt_confidence(self,confidence_range=None, BaseID=0,ModelID=0,context=None):
+        confidence_range = [0.9] if confidence_range is None else confidence_range
         index1 = self.modeliddict[BaseID]
         Prob=list()
         Count = 0
@@ -334,7 +341,8 @@ class MLModels():
             Prob.append(Count)
         return Prob 
     
-    def compute_prob_vs_score(self, ScoreRange=[0.1,0.3,0.9], BaseID=0,context=None):
+    def compute_prob_vs_score(self, ScoreRange=None, BaseID=0,context=None):
+        ScoreRange = [0.1,0.3,0.9] if ScoreRange is None else ScoreRange
         index1 = BaseID
         Prob=list()
         Count = 0
@@ -353,8 +361,9 @@ class MLModels():
 
 
 
-    def eval_policy(self,policy,baseid = 100, modelid = [0,2], policytype=None,
+    def eval_policy(self,policy,baseid = 100, modelid = None, policytype=None,
                     context=None):
+        modelid = [0,2] if modelid is None else modelid
         #print('type,',policytype)
         if(policytype=='q_value'):
             #print('enter')
@@ -365,8 +374,9 @@ class MLModels():
                                             context=context)
 
 
-    def _eval_policy_qvalue(self,policy,baseid = 100, modelid = [0,2], policytype=None,
+    def _eval_policy_qvalue(self,policy,baseid = 100, modelid = None, policytype=None,
                     context=None):
+        modelid = [0,2] if modelid is None else modelid
         if(1):
             # policy of the type: Pi, opt, q value, prob_value, activeindex
             Pi = policy[0]
@@ -410,7 +420,8 @@ class MLModels():
                 return 0
             return correct/total
         
-    def Compute_Conditional_Accuracy_AmongModel_Inverse(self, ScoreBound=0.9, ModelID=[0,1]):
+    def Compute_Conditional_Accuracy_AmongModel_Inverse(self, ScoreBound=0.9, ModelID=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         index1 = ModelID[0]
         index2 = ModelID[1]
         Count = 0
@@ -439,7 +450,8 @@ class MLModels():
                     CountCorrect = CountCorrect + 1
         return CountCorrect/Count, Count, CountCorrect
     
-    def Compute_Conditional_Accuracy_AmongModel(self, ScoreBound=0.9, ModelID=[0,1]):
+    def Compute_Conditional_Accuracy_AmongModel(self, ScoreBound=0.9, ModelID=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         index1 = ModelID[0]
         index2 = ModelID[1]
         Count = 0
@@ -456,7 +468,8 @@ class MLModels():
             Count = Count + 1
         return CountCorrect1/Count, CountCorrect2/Count, Count, CountCorrect1, CountCorrect2 
 
-    def Compute_Conditional_Accuracy_AmongModel_List(self, ScoreRange=(0.1,0.5,0.9), BaseID = 0, ModelID=[0,1]):
+    def Compute_Conditional_Accuracy_AmongModel_List(self, ScoreRange=(0.1,0.5,0.9), BaseID = 0, ModelID=None):
+        ModelID = [0,1] if ModelID is None else ModelID
         BaseAccuracy = list()
         ModelAccuracy = list()
         #print('prob',self.probas)
